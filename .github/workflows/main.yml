@@ -22,8 +22,8 @@ jobs:
           pip install pytest coverage
           coverage run -m pytest
         env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
-            SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3
         env:
