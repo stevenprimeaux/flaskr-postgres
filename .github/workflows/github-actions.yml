@@ -21,6 +21,7 @@ jobs:
         run: coverage run -m pytest
         env:
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
