@@ -5,4 +5,4 @@ values
 
 insert into posts (title, body, author_id, created)
 values
-  ('test title', 'test' || E'\n' || 'body', 1, '2018-01-01 00:00:00');
+  ('test title', 'test' || E'\n' || 'body', 1, '2023-01-01 00:00:00');
