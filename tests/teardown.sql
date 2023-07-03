@@ -1,2 +1,1 @@
-drop table posts cascade;
-drop table users cascade;
+drop table if exists posts, users cascade;
