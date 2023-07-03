@@ -2,7 +2,7 @@ import pytest
 
 from sqlalchemy import text
 
-from flaskr import db
+from flaskr.models import db
 
 
 def test_index(client, auth):

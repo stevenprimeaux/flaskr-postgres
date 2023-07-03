@@ -3,7 +3,7 @@ import pytest
 from flask import g, session
 from sqlalchemy import text
 
-from flaskr import db
+from flaskr.models import db
 
 
 def test_register(client, app):

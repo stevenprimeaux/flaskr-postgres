@@ -3,7 +3,8 @@ import pytest
 
 from sqlalchemy import text
 
-from flaskr import create_app, db, get_database_url, get_secret_key
+from flaskr import create_app, get_database_url, get_secret_key
+from flaskr.models import db
 
 
 with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:

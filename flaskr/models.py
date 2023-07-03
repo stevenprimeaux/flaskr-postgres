@@ -1,8 +1,9 @@
 """Define data model."""
 
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
-from flaskr import db
+db = SQLAlchemy()
 
 
 class User(db.Model):

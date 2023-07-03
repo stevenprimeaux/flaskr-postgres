@@ -5,9 +5,8 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from flaskr import db
 from flaskr.auth import login_required
-from flaskr.models import Post
+from flaskr.models import db, Post
 
 bp = Blueprint("blog", __name__)
 
@@ -49,11 +48,11 @@ def create():
     return render_template("blog/create.html")
 
 
-@bp.route("/<int:id>/update", methods=["GET", "POST"])
+@bp.route("/<int:post_id>/update", methods=["GET", "POST"])
 @login_required
-def update(id):
+def update(post_id):
     """Update blog post."""
-    post = get_post(id)
+    post = get_post(post_id)
 
     if request.method == "POST":
         title = request.form["title"]
@@ -76,24 +75,24 @@ def update(id):
     return render_template("blog/update.html", post=post)
 
 
-@bp.route("/<int:id>/delete", methods=["POST"])
+@bp.route("/<int:post_id>/delete", methods=["POST"])
 @login_required
-def delete(id):
+def delete(post_id):
     """Delete blog post."""
-    post = get_post(id)
+    post = get_post(post_id)
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for("blog.index"))
 
 
-def get_post(id, check_author=True):
+def get_post(post_id, check_author=True):
     """Fetch blog post."""
     post = db.session.execute(
-        db.select(Post).filter_by(id=id)
+        db.select(Post).filter_by(id=post_id)
     ).scalar_one_or_none()
 
     if post is None:
-        abort(404, f"Post id {id} doesn't exit.")
+        abort(404, f"Post id {post_id} doesn't exit.")
 
     if check_author and post.author_id != g.user.id:
         abort(403)

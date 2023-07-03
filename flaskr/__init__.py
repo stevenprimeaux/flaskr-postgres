@@ -4,11 +4,11 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+
+from flaskr import auth, blog
+from flaskr.models import db
 
 load_dotenv()
-
-db = SQLAlchemy()
 
 
 def get_database_url():
@@ -27,7 +27,6 @@ def get_secret_key():
 
 def create_app(test_config=None):
     """Define application factory."""
-    from . import auth, blog
 
     app = Flask(__name__, instance_relative_config=True)
 

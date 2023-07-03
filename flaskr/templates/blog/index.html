@@ -17,7 +17,7 @@
                 </h6>
                 <p class="card-text">{{ post.body }}</p>
                 {% if g.user.id == post.author_id %}
-                    <a class="card-link" href="{{ url_for('blog.update', id=post.id) }}">Edit</a>
+                    <a class="card-link" href="{{ url_for('blog.update', post_id=post.id) }}">Edit</a>
                 {% endif %}
             </div>
         </div>
