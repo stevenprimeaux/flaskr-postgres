@@ -8,7 +8,7 @@ from flask import (
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flaskr.models import db, User
+from flaskr.models import get_user_by_id, get_user_by_username, User
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -31,8 +31,7 @@ def register():
                 user = User()
                 user.username = username
                 user.password = generate_password_hash(password)
-                db.session.add(user)
-                db.session.commit()
+                user.insert()
             except IntegrityError:
                 error = f"User {username} is already registered."
             else:
@@ -51,9 +50,7 @@ def login():
         password = request.form["password"]
         error = None
 
-        user = db.session.execute(
-            db.select(User).filter_by(username=username)
-        ).scalar_one_or_none()
+        user = get_user_by_username(username)
 
         if user is None:
             error = "Incorrect username."
@@ -85,9 +82,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.session.execute(
-            db.select(User).filter_by(id=user_id)
-        ).scalar_one_or_none()
+        g.user = get_user_by_id(user_id)
 
 
 def login_required(view):

@@ -6,7 +6,7 @@ from flask import (
 from werkzeug.exceptions import abort
 
 from flaskr.auth import login_required
-from flaskr.models import db, Post
+from flaskr.models import get_posts_all, get_post_by_id, Post
 
 bp = Blueprint("blog", __name__)
 
@@ -14,9 +14,7 @@ bp = Blueprint("blog", __name__)
 @bp.route("/")
 def index():
     """Fetch blog posts to display on home page."""
-    posts = db.session.execute(
-        db.select(Post).order_by(Post.created.desc())
-    ).scalars()
+    posts = get_posts_all()
     return render_template("blog/index.html", posts=posts)
 
 
@@ -41,8 +39,7 @@ def create():
             post.title = title
             post.body = body
             post.author_id = g.user.id
-            db.session.add(post)
-            db.session.commit()
+            post.insert()
             return redirect(url_for("blog.index"))
 
     return render_template("blog/create.html")
@@ -69,7 +66,7 @@ def update(post_id):
         else:
             post.title = title
             post.body = body
-            db.session.commit()
+            post.update()
             return redirect(url_for("blog.index"))
 
     return render_template("blog/update.html", post=post)
@@ -80,16 +77,13 @@ def update(post_id):
 def delete(post_id):
     """Delete blog post."""
     post = get_post(post_id)
-    db.session.delete(post)
-    db.session.commit()
+    post.delete()
     return redirect(url_for("blog.index"))
 
 
 def get_post(post_id, check_author=True):
     """Fetch blog post."""
-    post = db.session.execute(
-        db.select(Post).filter_by(id=post_id)
-    ).scalar_one_or_none()
+    post = get_post_by_id(post_id)
 
     if post is None:
         abort(404, f"Post id {post_id} doesn't exit.")
