@@ -1,8 +1,7 @@
 # flaskr-postgres
 
+![Checks](https://github.com/stevenprimeaux/flaskr-postgres/actions/workflows/main.yml/badge.svg)
 [![codecov](https://codecov.io/gh/stevenprimeaux/flaskr-postgres/branch/main/graph/badge.svg?token=yNzlOtd6k8)](https://codecov.io/gh/stevenprimeaux/flaskr-postgres)
-
-![tests](https://github.com/stevenprimeaux/flaskr-postgres/actions/workflows/main.yml/badge.svg)
 
 See live version at https://flaskr-postgres.net.
 
