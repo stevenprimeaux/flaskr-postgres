@@ -1,1 +1,1 @@
-web: gunicorn "flaskr:create_app()"
+web: bin/start-pgbouncer gunicorn "flaskr:create_app()"
