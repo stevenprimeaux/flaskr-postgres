@@ -10,6 +10,7 @@ class User(db.Model):
     """Define users table."""
 
     __tablename__ = "users"
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
@@ -33,6 +34,7 @@ class Post(db.Model):
     """Define posts table."""
 
     __tablename__ = "posts"
+
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     title = db.Column(db.String, nullable=False)
@@ -69,6 +71,13 @@ def get_post_by_id(post_id):
     return db.session.execute(
         db.select(Post).filter_by(id=post_id)
     ).scalar_one_or_none()
+
+
+def get_users_all():
+    """Get all users."""
+    return db.session.execute(
+        db.select(User).order_by(User.username)
+    ).scalars()
 
 
 def get_user_by_id(user_id):

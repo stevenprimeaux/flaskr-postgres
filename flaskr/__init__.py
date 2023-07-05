@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 
-from flaskr import auth, blog
+from flaskr import admin, auth, blog
 from flaskr.models import db
 
 load_dotenv()
@@ -39,6 +39,7 @@ def create_app(test_config=None):
         )
 
     db.init_app(app)
+    app.register_blueprint(admin.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
 
@@ -46,6 +47,7 @@ def create_app(test_config=None):
         db.create_all()
 
     app.add_url_rule("/", endpoint="index")
+    app.add_url_rule("/admin", endpoint="admin.index")
 
     @app.route("/hello")
     def hello():
